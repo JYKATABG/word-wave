@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  category    String    @default("Uncategorized")
+  imageUrl    String?
+  description String
+  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+  authorId    String
+  themeId     String?
+  theme       Theme?    @relation(fields: [themeId], references: [id])
+  likes       Like[]
+  comments    Comment[]
+}
+
+model Theme {
+  id          String   @id @default(cuid())
+  title       String
+  category    String   @default("Uncategorized")
+  description String?
+  createdAt   DateTime @default(now())
+  authorId    String
+  Post        Post[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  creadetAt DateTime @default(now())
+  postId    String
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  creadetAt DateTime @default(now())
+  content   String
+  postId    String
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+}

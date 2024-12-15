@@ -1,0 +1,18 @@
+-- CreateTable
+CREATE TABLE "Like" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "creadetAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "postId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Like_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Comment" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "creadetAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "content" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
